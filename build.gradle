@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+//        classpath "io.qameta.allure:allure-gradle:2.13.5"
+        classpath "io.qameta.allure.gradle.allure:allure-plugin:2.9.6"
+    }
+}
+
+plugins {
+    id 'java'
+    id'io.qameta.allure' version'2.9.6'
+}
+
+allure {
+    version = '2.13.5'
+//    autoconfigure = true;
+//    aspectjweaver = true;
+//    resultsDir = file('/allure-results')
+//    reportDir = file('/allure-results')
+
+    useJUnit5{
+        version = '2.13.5'
+    }
+    dependencies {
+        allureCommandline(files("allure-commandline-2.13.5.zip"))
+    }
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+//    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '4.1.2'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.2'
+//    testImplementation group: 'io.qameta.allure', name: 'allure-junit4', version: '2.13.5'
+    implementation group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.13.5'
+
+    implementation group: 'io.qameta.allure', name: 'allure-maven', version: '2.11.2'
+    implementation 'io.qameta.allure:allure-commandline:2.13.5'
+    constraints {
+        implementation group: 'io.qameta.allure', name: 'allure-junit-platform', version: '2.13.5'
+        implementation group: 'io.qameta.allure', name: 'allure-model', version: '2.13.5'
+        implementation group: 'io.netty', name: 'netty-transport-native-kqueue', version: '4.1.73.Final'
+
+    }
+
+    implementation  group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
+    implementation group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
+    implementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+    implementation group: 'org.junit.platform', name: 'junit-platform-suite-api', version: '1.8.2'
+
+
+    testImplementation(platform("org.junit:junit-bom:5.8.2"))
+    testImplementation(platform("io.cucumber:cucumber-bom:7.2.3"))
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit-platform-engine', version: '7.2.3'
+    testImplementation group: 'org.junit.platform', name: 'junit-platform-suite', version: '1.8.2'
+
+
+
+//    testImplementation("org.junit.platform:junit-platform-suite")
+//    testImplementation("org.junit.jupiter:junit-jupiter")
+
+}
+
+
+
+test {
+    useJUnitPlatform()
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
+}
