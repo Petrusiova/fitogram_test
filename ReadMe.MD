@@ -28,5 +28,5 @@ Run AllureServe to look through the results with alternative instrument (screens
 
 ![alt text](5.png)
 
-![alt text](6.png)
+![alt text](6.jpeg)
 
