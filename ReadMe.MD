@@ -1,4 +1,4 @@
-Here is the project for the test task (task.txt)
+Here is the project for the test task
 
 I decided to use Allure report + Cucumber report.
 To run tests please clone the project and press the buttons (see the screenshot below)
