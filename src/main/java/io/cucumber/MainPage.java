@@ -37,32 +37,32 @@ public class MainPage extends BasePage {
     }
 
     @Step("User opens start page")
-    public void goToMainPage(){
+    public void goToMainPage() {
         getChromeDriver().get(MAIN_PAGE_URL);
     }
 
     @Step("User clicks Sign In button")
-    public void clickSignIn(){
+    public void clickSignIn() {
         signIn.click();
     }
 
     @Step("Enter login: {0}")
-    public void enterLogin(String login){
+    public void enterLogin(String login) {
         email.click();
         email.sendKeys("");
         email.sendKeys(login);
     }
 
     @Step("Enter password: {0}")
-    public void enterPassword(String pass){
+    public void enterPassword(String pass) {
         password.click();
         password.sendKeys("");
         password.sendKeys(pass);
     }
 
     @Step("Check Error Message Is Displayed: {0}")
-    public void checkErrorMessageIsDisplayed(String errorMessage){
-        waitForElementToBeDisplayed(signInError,10, 250, true);
+    public void checkErrorMessageIsDisplayed(String errorMessage) {
+        waitForElementToBeDisplayed(signInError, 10, 250, true);
         Assertions.assertTrue(signInError.isDisplayed(),
                 "Error is not displayed");
         Assertions.assertEquals(errorMessage, signInError.getText(),
@@ -70,20 +70,17 @@ public class MainPage extends BasePage {
     }
 
     @Step("User closes pop-up")
-    public void closePopUpWindow(){
-        if (popUp.isDisplayed()){
+    public void closePopUpWindow() {
+        waitForElementToBeDisplayed(popUp, 10, 250, true);
             closePopUpButton.click();
-        }
-        waitForElementToBeDisplayed(closePopUpButton,10, 250, false);
+        waitForElementToBeDisplayed(closePopUpButton, 10, 250, false);
 
         Assertions.assertFalse(closePopUpButton.isDisplayed(),
                 "Pop-up window is still displayed");
     }
 
     private void waitForElementToBeDisplayed(WebElement element, int duration, int polling, boolean shouldVisible) {
-        FluentWait wait = new FluentWait(getChromeDriver());
-        wait.withTimeout(Duration.ofSeconds(duration));
-        wait.pollingEvery(Duration.ofMillis(polling));
+        var wait = setTimeOut(duration, polling);
         wait.ignoring(NoSuchElementException.class);
         if (!shouldVisible) {
             wait.until(ExpectedConditions.invisibilityOf(element));
@@ -91,6 +88,4 @@ public class MainPage extends BasePage {
             wait.until(ExpectedConditions.visibilityOf(element));
         }
     }
-
-
 }

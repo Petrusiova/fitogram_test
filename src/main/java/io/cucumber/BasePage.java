@@ -47,9 +47,7 @@ public class BasePage {
 
     @Step("Check url equals to expected: {expectedUrl}")
     public static void checkExpectedUrl(String expectedUrl){
-        FluentWait wait = new FluentWait(getChromeDriver());
-        wait.withTimeout(Duration.ofSeconds(10));
-        wait.pollingEvery(Duration.ofMillis(250));
+        var wait = setTimeOut(10, 250);
         wait.until(ExpectedConditions.urlToBe(expectedUrl));
         Assertions.assertEquals(expectedUrl, driver.getCurrentUrl(), "Wrong page url");
     }
@@ -63,5 +61,12 @@ public class BasePage {
             executor.executeScript("arguments[0].scrollIntoView(true);", element);
             executor.executeScript("arguments[0].click()", element);
         }
+    }
+
+    protected static FluentWait setTimeOut(int duration, int polling) {
+        FluentWait wait = new FluentWait(getChromeDriver());
+        wait.withTimeout(Duration.ofSeconds(duration));
+        wait.pollingEvery(Duration.ofMillis(polling));
+        return wait;
     }
 }
