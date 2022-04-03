@@ -46,21 +46,21 @@ public class MainPage extends BasePage {
         signIn.click();
     }
 
-    @Step("Enter login: {}")
+    @Step("Enter login: {0}")
     public void enterLogin(String login){
         email.click();
         email.sendKeys("");
         email.sendKeys(login);
     }
 
-    @Step("Enter password: {}")
+    @Step("Enter password: {0}")
     public void enterPassword(String pass){
         password.click();
         password.sendKeys("");
         password.sendKeys(pass);
     }
 
-    @Step("Enter password: {}")
+    @Step("Check Error Message Is Displayed: {0}")
     public void checkErrorMessageIsDisplayed(String errorMessage){
         waitForElementToBeDisplayed(signInError,10, 250, true);
         Assertions.assertTrue(signInError.isDisplayed(),
